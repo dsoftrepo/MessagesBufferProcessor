@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
-namespace MessagesBuffer
+namespace MessagesBufferProcessor
 {
     public class MessagesBufferProcessor<TMessage>
     {

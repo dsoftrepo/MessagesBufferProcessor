@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MessagesBuffer
+namespace MessagesBufferProcessor
 {
     public class MessagesBuffer<T>
     {

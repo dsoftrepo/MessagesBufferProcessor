@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MessagesBuffer
+namespace MessagesBufferProcessor
 {
     public class MessagesBufferEventArgs : EventArgs
     {

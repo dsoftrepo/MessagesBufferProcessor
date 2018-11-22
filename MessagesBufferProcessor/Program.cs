@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading;
+using MessagesBufferProcessor;
 
-namespace MessagesBuffer
+namespace MessagesBufferProcessorApp
 {
     internal class Program
     {
