@@ -33,6 +33,11 @@ namespace MessagesBufferProcessor
             _messagesBuffer.AddMessage(subject, message);
         }
 
+        public void GetMessages(string subject = null)
+        {
+            _messagesBuffer.GetMessages(subject);
+        }
+
         public void ClearProcessedMessages(string subject = null)
         {
             _messagesBuffer.ClearProcessedMessages(subject);

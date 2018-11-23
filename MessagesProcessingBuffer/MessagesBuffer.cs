@@ -55,6 +55,19 @@ namespace MessagesBufferProcessor
             return Enumerable.Empty<T>();
         }
 
+        public IEnumerable<T> GetProcessedMessages(string subject)
+        {
+            lock (_lock)
+            {
+                if (_processedMessages.ContainsKey(subject))
+                {
+                    return _processedMessages[subject].ToList();
+                }
+            }
+
+            return Enumerable.Empty<T>();
+        }
+
         public void RemoveMessage(string subject, T message)
         {
             lock (_lock)
