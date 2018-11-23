@@ -15,9 +15,9 @@ namespace MessagesBufferProcessorApp
                 Thread.Sleep(new Random().Next(1000));
             }
 
-            var messageBufferProcessor = new MessagesBufferProcessor<int>(1000, 2, MessageProcessAction);
-
-            messageBufferProcessor.MessageBufferChanged += MessageBufferProcessor_MessageBufferChanged;
+            var messageBufferProcessor = new MessagesBufferProcessor<int>(1000, 2);
+            messageBufferProcessor.RegisterProcessingAction(MessageProcessAction);
+            messageBufferProcessor.BufferChanged += MessageBufferProcessor_MessageBufferChanged;
 
             var input = new char();
 
@@ -27,13 +27,13 @@ namespace MessagesBufferProcessorApp
                 switch (input)
                 {
                     case 'a':
-                        messageBufferProcessor.AddMessage("Sip1", new Random().Next(10));
+                        messageBufferProcessor.PushNewMessage("Sip1", new Random().Next(10));
                         break;
                     case 's':
-                        messageBufferProcessor.AddMessage("Sip2", new Random().Next(10));
+                        messageBufferProcessor.PushNewMessage("Sip2", new Random().Next(10));
                         break;
                     case 'z':
-                        messageBufferProcessor.AddMessage("Sip3", new Random().Next(10));
+                        messageBufferProcessor.PushNewMessage("Sip3", new Random().Next(10));
                         break;
                     case 'c':
                         messageBufferProcessor.ClearProcessedMessages();
@@ -44,7 +44,7 @@ namespace MessagesBufferProcessorApp
 
         private static void MessageBufferProcessor_MessageBufferChanged(object sender, EventArgs e)
         {
-            if (e is MessagesBufferProcessorEventArgs<int> args)
+            if (e is MessagesBufferEventArgs args)
             {
                 Console.WriteLine("{0} : processed {1} , to process : {2}", args.Subject, args.Processed, args.ToProcess);
 
