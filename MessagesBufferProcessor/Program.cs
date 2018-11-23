@@ -12,10 +12,10 @@ namespace MessagesBufferProcessorApp
 
             void MessageProcessAction(int x)
             {
-                Thread.Sleep(new Random().Next(1000));
+                Thread.Sleep(new Random().Next(2000,4000));
             }
 
-            var messageBufferProcessor = new MessagesBufferProcessor<int>(1000, 2);
+            var messageBufferProcessor = new MessagesBufferProcessor<int>(500, 2);
             messageBufferProcessor.RegisterProcessingAction(MessageProcessAction);
             messageBufferProcessor.BufferChanged += MessageBufferProcessor_MessageBufferChanged;
 

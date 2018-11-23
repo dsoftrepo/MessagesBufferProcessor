@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace MessagesBufferProcessor
 {
     public class MessagesBufferProcessor<TMessage>
-    {        
+    {
+        private int _runningTasks;
         private readonly Dictionary<string, IDisposable> _subscriptions = new Dictionary<string, IDisposable>();
         private readonly MessagesBuffer<MessageContainer<TMessage>> _messagesBuffer = new MessagesBuffer<MessageContainer<TMessage>>();
         private readonly int _observingInterval;
@@ -84,9 +85,11 @@ namespace MessagesBufferProcessor
         {
             return Observable.Interval(TimeSpan.FromMilliseconds(_observingInterval)).Subscribe(tick =>
             {
+                if (_runningTasks >= _processingBatchSize) return;
+
                 IEnumerable<MessageContainer<TMessage>> toProcess =
                     _messagesBuffer
-                        .GetMessages(args.Subject, _processingBatchSize)
+                        .GetMessages(args.Subject, _processingBatchSize - _runningTasks)
                         .Where(x => !x.Running)
                         .ToList();
 
@@ -96,12 +99,14 @@ namespace MessagesBufferProcessor
 
                     Task.Run(() =>
                     {
+                        _runningTasks++;
                         _processingAction.Invoke(container.Message);
                     })
-                        .ContinueWith(x =>
-                        {
-                            _messagesBuffer.RemoveMessage(args.Subject, container);
-                        });
+                    .ContinueWith(x =>
+                    {
+                        _messagesBuffer.RemoveMessage(args.Subject, container);
+                        _runningTasks--;
+                    });
                 }
             });
         }
