@@ -38,6 +38,11 @@ namespace MessagesBufferProcessor
             _messagesBuffer.ClearProcessedMessages(subject);
         }
 
+        public void GetProcessedMessages(string subject = null)
+        {
+            _messagesBuffer.GetMessages(subject);
+        }
+
         private void OnFirstMessageArrived(object sender, EventArgs e)
         {
             if (!(e is MessagesBufferEventArgs args)) return;
