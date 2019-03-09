@@ -1,4 +1,4 @@
-﻿namespace MessagesBufferProcessor
+﻿namespace MessagesBuffer
 {
     public class MessageContainer<T>
     {

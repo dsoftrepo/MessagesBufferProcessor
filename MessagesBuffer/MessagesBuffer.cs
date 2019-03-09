@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MessagesBufferProcessor
+namespace MessagesBuffer
 {
     public class MessagesBuffer<T>
     {
-        public const string Started = "Started";
-        public const string Added = "Added";
-        public const string Updated = "Updated";
-        public const string Completed = "Completed";
-        
         private readonly object _lock = new object();
         private readonly Dictionary<string, List<T>> _processedMessages = new Dictionary<string, List<T>>();
         private readonly Dictionary<string, List<T>> _messages = new Dictionary<string, List<T>>();
@@ -79,7 +74,7 @@ namespace MessagesBufferProcessor
             {
                 if (!_messages.ContainsKey(subject))
                 {
-                    OnEmptyListReached(GetChangedArgs(subject, $"{subject} - all messages are processed", Completed));
+                    OnEmptyListReached(GetChangedArgs(subject, $"{subject} - all messages are processed", EventType.Completed));
                     return;
                 }
 
@@ -89,14 +84,14 @@ namespace MessagesBufferProcessor
 
                 if (_messages[subject].Count == 0)
                 {
-                    OnEmptyListReached(GetChangedArgs(subject, $"{subject} - all messages are processed", Completed));
+                    OnEmptyListReached(GetChangedArgs(subject, $"{subject} - all messages are processed", EventType.Completed));
                 }
 
-                OnChanged(GetChangedArgs(subject, "Message processed", Updated));
+                OnChanged(GetChangedArgs(subject, "Message processed", EventType.Updated));
             }
         }
 
-        private MessagesBufferEventArgs GetChangedArgs(string subject, string message, string type)
+        private MessagesBufferEventArgs GetChangedArgs(string subject, string message, EventType type)
         {
             return new MessagesBufferEventArgs(subject)
             {
@@ -127,7 +122,7 @@ namespace MessagesBufferProcessor
                 {
                     if (_messages[subject].Count == 0)
                     {
-                        OnFirstArrived(GetChangedArgs(subject, "First message arrived", Started));
+                        OnFirstArrived(GetChangedArgs(subject, "First message arrived", EventType.Started));
                     }
 
                     _messages[subject].Add(message);
@@ -135,10 +130,10 @@ namespace MessagesBufferProcessor
                 else
                 {
                     _messages.Add(subject, new List<T> { message });
-                    OnFirstArrived(GetChangedArgs(subject, "First message arrived", Started));
+                    OnFirstArrived(GetChangedArgs(subject, "First message arrived", EventType.Started));
                 }
 
-                OnChanged(GetChangedArgs(subject, "New message arrived", Added));
+                OnChanged(GetChangedArgs(subject, "New message arrived", EventType.Added));
             }
         }
 

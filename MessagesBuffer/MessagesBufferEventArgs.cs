@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MessagesBufferProcessor
+namespace MessagesBuffer
 {
     public class MessagesBufferEventArgs : EventArgs
     {
@@ -9,7 +9,7 @@ namespace MessagesBufferProcessor
             Subject = subject;
         }
 
-        public string ChangeType { get; set; }
+        public EventType ChangeType { get; set; }
         public string Subject { get; set; }
         public string Message { get; set; }
         public int ToProcess { get; set; }

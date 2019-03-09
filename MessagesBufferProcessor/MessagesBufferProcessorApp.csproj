@@ -48,8 +48,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MessagesProcessingBuffer\MessagesBuffer.csproj">
-      <Project>{9ce95731-21a8-48be-945e-02d92e5ec998}</Project>
+    <ProjectReference Include="..\MessagesBuffer\MessagesBuffer.csproj">
+      <Project>{9CE95731-21A8-48BE-945E-02D92E5EC998}</Project>
       <Name>MessagesBuffer</Name>
     </ProjectReference>
   </ItemGroup>

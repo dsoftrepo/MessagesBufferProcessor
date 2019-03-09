@@ -1,6 +1,6 @@
-﻿using System;
+﻿using MessagesBuffer;
+using System;
 using System.Threading;
-using MessagesBufferProcessor;
 
 namespace MessagesBufferProcessorApp
 {

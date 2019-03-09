@@ -4,9 +4,9 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
-namespace MessagesBufferProcessor
+namespace MessagesBuffer
 {
-    public class MessagesBufferProcessor<TMessage>
+    public class MessagesBufferProcessor<TMessage> : IMessagesBuffer<TMessage>
     {
         private int _runningTasks;
         private readonly Dictionary<string, IDisposable> _subscriptions = new Dictionary<string, IDisposable>();
@@ -48,6 +48,11 @@ namespace MessagesBufferProcessor
 
         public void PushNewMessage(string subject, TMessage message)
         {
+            if (_processingAction == null)
+            {
+                throw new NullReferenceException("Processing action not registered");
+            }
+
             _messagesBuffer.AddMessage(subject, new MessageContainer<TMessage>(message));
         }
 
@@ -98,15 +103,15 @@ namespace MessagesBufferProcessor
                     container.Running = true;
 
                     Task.Run(() =>
-                    {
-                        _runningTasks++;
-                        _processingAction.Invoke(container.Message);
-                    })
-                    .ContinueWith(x =>
-                    {
-                        _messagesBuffer.RemoveMessage(args.Subject, container);
-                        _runningTasks--;
-                    });
+                        {
+                            _runningTasks++;
+                            _processingAction.Invoke(container.Message);
+                        })
+                        .ContinueWith(x =>
+                        {
+                            _messagesBuffer.RemoveMessage(args.Subject, container);
+                            _runningTasks--;
+                        });
                 }
             });
         }
