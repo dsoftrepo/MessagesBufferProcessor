@@ -27,14 +27,14 @@ namespace MessagesBufferProcessorApp
                 switch (input)
                 {
                     case 'a':
-                        messageBufferProcessor.PushNewMessage("Sip1", new Random().Next(10));
-                        break;
+                        messageBufferProcessor.PushNewMessage("Sip1", new Random().Next(10), "message-id", "name", "tag");
+						break;
                     case 's':
-                        messageBufferProcessor.PushNewMessage("Sip2", new Random().Next(10));
-                        break;
+                        messageBufferProcessor.PushNewMessage("Sip2", new Random().Next(10), "message-id", "name", "tag");
+						break;
                     case 'z':
-                        messageBufferProcessor.PushNewMessage("Sip3", new Random().Next(10));
-                        break;
+                        messageBufferProcessor.PushNewMessage("Sip3", new Random().Next(10), "message-id", "name", "tag");
+						break;
                     case 'c':
                         messageBufferProcessor.ClearProcessedMessages();
                         break;

@@ -19,7 +19,7 @@ namespace TDR.Utilities.UnitTests
             //Act//Assert
             Assert.Throws<NullReferenceException>(() =>
             {
-                buffer.PushNewMessage("test", 100);
+                buffer.PushNewMessage("test", 100, "message-id", "name", "tag");
             });
         }
 
@@ -44,10 +44,10 @@ namespace TDR.Utilities.UnitTests
             };
 
             //Act
-            buffer.PushNewMessage("test", 100);
+            buffer.PushNewMessage("test", 100, "message-id", "name", "tag");
 
-            //Assert
-            Assert.IsTrue(started);
+			//Assert
+			Assert.IsTrue(started);
             Assert.AreEqual(1, buffer.GetMessages("test").Count());
         }
 
@@ -72,11 +72,11 @@ namespace TDR.Utilities.UnitTests
             };
 
             //Act//Assert
-            buffer.PushNewMessage("test", 100);
-            Assert.AreEqual(1, count);
+            buffer.PushNewMessage("test", 100, "message-id", "name", "tag");
+			Assert.AreEqual(1, count);
             Assert.AreEqual(1, buffer.GetMessages("test").Count());
-            buffer.PushNewMessage("test", 100);
-            Assert.AreEqual(2, count);
+            buffer.PushNewMessage("test", 100, "message-id", "name", "tag");
+			Assert.AreEqual(2, count);
             Assert.AreEqual(2, buffer.GetMessages("test").Count());
             Assert.IsTrue(emptyEvent.WaitOne(500), "should take less than 500 ms");
         }
@@ -104,8 +104,8 @@ namespace TDR.Utilities.UnitTests
             //Act
             for (var i = 0; i < 4; i++)
             {
-                buffer.PushNewMessage("test", 50);
-            }
+                buffer.PushNewMessage("test", 50, "message-id", "name", "tag");
+			}
 
             //Assert
             Assert.AreEqual(4, buffer.GetMessages("test").Count());
@@ -132,8 +132,8 @@ namespace TDR.Utilities.UnitTests
             //Act
             for (var i = 0; i < 4; i++)
             {
-                buffer.PushNewMessage("test", 100);
-            }
+                buffer.PushNewMessage("test", 100, "message-id", "name", "tag");
+			}
 
             //Assert
             Assert.AreEqual(4, buffer.GetMessages("test").Count());
@@ -169,10 +169,10 @@ namespace TDR.Utilities.UnitTests
             //Act
             for (var i = 0; i < 4; i++)
             {
-                buffer.PushNewMessage("test_1", 100);
-                buffer.PushNewMessage("test_2", 100);
-                buffer.PushNewMessage("test_3", 100);
-            }
+                buffer.PushNewMessage("test_1", 100, "message-id", "name", "tag");
+                buffer.PushNewMessage("test_2", 100, "message-id", "name", "tag");
+                buffer.PushNewMessage("test_3", 100, "message-id", "name", "tag");
+			}
 
             //Assert
             Assert.AreEqual(4, buffer.GetMessages("test_1").Count());
@@ -214,10 +214,10 @@ namespace TDR.Utilities.UnitTests
             //Act
             for (var i = 0; i < 8; i++)
             {
-                buffer.PushNewMessage("test_1", 100);
-                buffer.PushNewMessage("test_2", 200);
-                buffer.PushNewMessage("test_3", 400);
-            }
+                buffer.PushNewMessage("test_1", 100, "message-id", "name", "tag");
+                buffer.PushNewMessage("test_2", 200, "message-id", "name", "tag");
+                buffer.PushNewMessage("test_3", 400, "message-id", "name", "tag");
+			}
 
             //Assert
             Assert.AreEqual(8, buffer.GetMessages("test_1").Count());
@@ -258,8 +258,8 @@ namespace TDR.Utilities.UnitTests
             //Act
             for (var i = 0; i < 4; i++)
             {
-                buffer.PushNewMessage("test", 50);
-            }
+                buffer.PushNewMessage("test", 50, "message-id", "name", "tag");
+			}
 
             //Assert
             Assert.AreEqual(4, buffer.GetMessages("test").Count());
@@ -295,8 +295,8 @@ namespace TDR.Utilities.UnitTests
             //Act
             for (var i = 0; i < 4; i++)
             {
-                buffer.PushNewMessage("test", 50);
-            }
+                buffer.PushNewMessage("test", 50, "message-id", "name", "tag");
+			}
 
             //Assert
             Assert.AreEqual(4, buffer.GetMessages("test").Count());
